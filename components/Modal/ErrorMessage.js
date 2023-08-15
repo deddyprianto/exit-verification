@@ -2,10 +2,10 @@ import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { SVGIconSeru, SVGQRScanner } from '../svg';
 
-export function ErrorMessage({ setIsOpen, isOpen }) {
+export function ErrorMessage({ isValidQrCode }) {
   return (
-    <Transition appear show={isOpen} as={Fragment}>
-      <Dialog as='div' className='relative z-10' onClose={setIsOpen}>
+    <Transition appear show={isValidQrCode} as={Fragment}>
+      <Dialog as='div' className='relative z-10' onClose={() => isValidQrCode}>
         <Transition.Child
           as={Fragment}
           enter='ease-out duration-300'
@@ -29,7 +29,7 @@ export function ErrorMessage({ setIsOpen, isOpen }) {
               leaveFrom='opacity-100 scale-100'
               leaveTo='opacity-0 scale-95'
             >
-              <Dialog.Panel className='w-[560px] transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all'>
+              <Dialog.Panel className='w-[560px] transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all lg:w-[650px]'>
                 <Dialog.Title
                   as='div'
                   className='p-[16px] h-[122px] flex justify-center items-center flex-col'

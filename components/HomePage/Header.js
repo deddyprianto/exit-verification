@@ -10,16 +10,16 @@ export default function Header() {
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
       }}
-      className='p-[24px] h-[276px]'
+      className='p-[24px] h-[276px] lg:h-[354px]'
     >
       <div
-        className='bg-white rounded-[16px] w-full flex justify-between h-[104px] p-[16px] lg:p[24px]'
+        className='bg-white rounded-[16px] w-full flex justify-between h-[104px] p-[16px] lg:h-[128px] lg:p[24px]'
         style={{
           boxShadow: '0px 4px 10px 0px rgba(0, 0, 0, 0.10)',
         }}
       >
         <img src={logo.src} />
-        <div className='justify-items-end h-[48px] text-[18px] font-medium b'>
+        <div className='justify-items-end h-[48px] text-[18px]  font-medium lg:text-[24px]'>
           <div className='flex items-center justify-end'>
             <SVGLocation />
             <div className='ml-[8px]'>Head Quarter</div>
