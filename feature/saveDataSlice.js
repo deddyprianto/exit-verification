@@ -6,7 +6,6 @@ const initialState = {
   isErrorScan: false,
   valueScnanner: '',
 };
-//202308100002-IHQ-A002
 export const counterSlice = createSlice({
   name: 'saveDataSlice',
   initialState,

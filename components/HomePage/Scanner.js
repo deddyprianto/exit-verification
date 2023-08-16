@@ -54,7 +54,7 @@ export default function Scanner() {
 
   return (
     <div className='h-[350px] bg-white'>
-      <div className='text-center text-3xl mt-[10px]'>{valueScnanner}</div>
+      <input autoFocus className='w-full p-[16px]' />
     </div>
   );
 }
