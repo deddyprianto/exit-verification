@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -7,27 +7,19 @@ import {
   setIsErrorScan,
   setValueScanner,
 } from '@/feature/saveDataSlice';
-import useScanDetection from 'use-scan-detection';
 import { useRouter } from 'next/navigation';
 import { setRefNo } from '@/feature/saveDataPersisted';
 
 export default function Scanner() {
+  const [valueScanner, setValueScanner] = useState('');
   const route = useRouter();
   const dispatch = useDispatch();
-  const valueScnanner = useSelector((state) => state.dataUser.valueScnanner);
-  useScanDetection({
-    onComplete: (code) => {
-      dispatch(setValueScanner(code));
-    },
-    minLength: 13,
-  });
-
   useEffect(() => {
     const handleScanner = async () => {
       try {
         dispatch(setIsLoading(true));
         const res = await axios.get(
-          `https://api-fareastflora.proseller-demo.com/integration/api/v1/transactions/byTransactionRefNo/${valueScnanner}`,
+          `https://api-fareastflora.proseller-demo.com/integration/api/v1/transactions/byTransactionRefNo/${valueScanner}`,
           {
             headers: {
               'User-Agent': 'Apidog/1.0.0 (https://apidog.com)',
@@ -39,7 +31,7 @@ export default function Scanner() {
         );
         dispatch(setDataScanner(res.data.data));
         dispatch(setIsLoading(false));
-        dispatch(setRefNo(valueScnanner));
+        dispatch(setRefNo(valueScanner));
         route.push('/thankyoupage');
       } catch (error) {
         dispatch(setIsErrorScan(true));
@@ -47,14 +39,19 @@ export default function Scanner() {
       }
     };
 
-    if (valueScnanner) {
+    if (valueScanner) {
       handleScanner();
     }
-  }, [valueScnanner]);
+  }, [valueScanner]);
 
   return (
     <div className='h-[350px] bg-white'>
-      <input autoFocus className='w-full p-[16px]' />
+      <input
+        value={valueScanner}
+        onChange={(e) => setValueScanner(e.target.value)}
+        autoFocus
+        className='w-full p-[16px]'
+      />
     </div>
   );
 }
