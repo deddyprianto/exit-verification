@@ -1,4 +1,4 @@
-import banner from '@/assets/img/image.png';
+import banner from '@/assets/img/bannerThankyou.png';
 import logo from '@/assets/img/logo.png';
 import { SVGDate, SVGLocation } from '../svg';
 import { useSelector } from 'react-redux';

@@ -1,11 +1,14 @@
 import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { SVGIconSeru, SVGQRScanner } from '../svg';
+import { useDispatch } from 'react-redux';
+import { setIsErrorScan, setValueScanner } from '@/feature/saveDataSlice';
+import iconLoading from '@/assets/img/iconLoading.png';
 
-export function ErrorMessage({ isValidQrCode }) {
+export function LoadingPopup({ isLoading }) {
+  const dispatch = useDispatch();
   return (
-    <Transition appear show={isValidQrCode} as={Fragment}>
-      <Dialog as='div' className='relative z-10' onClose={() => isValidQrCode}>
+    <Transition appear show={isLoading} as={Fragment}>
+      <Dialog as='div' className='relative z-10' onClose={() => isLoading}>
         <Transition.Child
           as={Fragment}
           enter='ease-out duration-300'
@@ -34,22 +37,26 @@ export function ErrorMessage({ isValidQrCode }) {
                   as='div'
                   className='p-[16px] h-[122px] flex justify-center items-center flex-col'
                 >
-                  <SVGIconSeru />
+                  <img src={iconLoading.src} alt='animationLoading' />
                   <div className='text-[24px] font-bold text-center mt-[7px] text-[#003F24]'>
-                    Scan Receipt Error
+                    Please Wait
                   </div>
                 </Dialog.Title>
 
                 <div className='p-[16px] h-[104px] text-center text-[24px] font-medium text-black'>
-                  Oops, something went wrong during your receipt scanning,
-                  please try again
+                  Searching for your receipt...
                 </div>
 
                 <div className='p-[16px] h-[90px]'>
-                  <div className='flex justify-center items-center bg-[#003F24] p-[8px] h-[57px] cursor-pointer'>
-                    <SVGQRScanner color='white' />
-                    <div className='text-white p-[8px] ml-[8px] rounded-[4px] text-[24px] font-medium'>
-                      RE-SCAN RECEIPT
+                  <div className='flex justify-center items-center border border-[#003F24] p-[8px] h-[57px] cursor-pointer'>
+                    <div
+                      onClick={() => {
+                        dispatch(setValueScanner(''));
+                        dispatch(setIsErrorScan(false));
+                      }}
+                      className='text-[#003F24] p-[8px] ml-[8px] rounded-[4px] text-[24px] font-medium'
+                    >
+                      CANCEL
                     </div>
                   </div>
                 </div>

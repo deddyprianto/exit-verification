@@ -1,7 +1,39 @@
-import { Fragment } from 'react';
+import { Fragment, useRef } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
+import axios from 'axios';
+import { setDataScanner, setIsLoading } from '@/feature/saveDataSlice';
+import { setRefNo } from '@/feature/saveDataPersisted';
+import { useDispatch } from 'react-redux';
+import { useRouter } from 'next/navigation';
 
 export function ModaIRefInput({ setIsOpen, isOpen }) {
+  const route = useRouter();
+  const dispatch = useDispatch();
+  const inputRef = useRef();
+  const handleInputReference = async () => {
+    try {
+      dispatch(setIsLoading(true));
+      const res = await axios.get(
+        `https://api-fareastflora.proseller-demo.com/integration/api/v1/transactions/byTransactionRefNo/${inputRef.current.value}`,
+        {
+          headers: {
+            'User-Agent': 'Apidog/1.0.0 (https://apidog.com)',
+            Authorization:
+              'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl91c2UiOiJhY2Nlc3MiLCJ0eXBlIjoiaWRlbnRpdHlQb29sIiwiY29tcGFueUlkIjoiY29tcGFueTo6YjA1NTQ0ODgtMTI3MS00YjI5LTgwYjAtZTM5ZjllZTFjNjVlIiwiY29tcGFueU5hbWUiOiJmYXJlYXN0ZmxvcmEiLCJkb21haW5OYW1lIjoiYXBpLWZhcmVhc3RmbG9yYS5wcm9zZWxsZXItZGVtby5jb20ifQ.sldfM1vhkryUfL3yV_FZYF16R0trmz250U4r6UW7Gbs',
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      dispatch(setDataScanner(res.data.data));
+      dispatch(setIsLoading(false));
+      dispatch(setRefNo(inputRef.current.value));
+      route.push('/thankyoupage');
+    } catch (error) {
+      // dispatch(setIsErrorScan(true));
+      console.log('err', error);
+    }
+  };
+
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog as='div' className='relative z-10' onClose={setIsOpen}>
@@ -40,6 +72,7 @@ export function ModaIRefInput({ setIsOpen, isOpen }) {
 
                 <div className='p-[16px] h-[84px] lg:h-[128px]'>
                   <input
+                    ref={inputRef}
                     placeholder='Order Reference Number'
                     className='border border-[#888787] w-full px-[16px] py-[8px] outline-none text-[24px] font-normal'
                   />
@@ -56,7 +89,10 @@ export function ModaIRefInput({ setIsOpen, isOpen }) {
                     >
                       CANCEL
                     </div>
-                    <div className='flex justify-center items-center h-[52px] w-[256px] bg-[#003F24] text-white p-[8px] ml-[8px] rounded-[4px] lg:w-[301px] lg:h-[70px]'>
+                    <div
+                      onClick={handleInputReference}
+                      className='flex justify-center items-center h-[52px] w-[256px] bg-[#003F24] text-white p-[8px] ml-[8px] rounded-[4px] lg:w-[301px] lg:h-[70px] cursor-pointer'
+                    >
                       SUBMIT
                     </div>
                   </div>

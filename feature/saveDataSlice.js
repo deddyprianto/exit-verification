@@ -1,26 +1,39 @@
 import { createSlice } from '@reduxjs/toolkit';
-
 const initialState = {
-  saveData: '',
+  dataScan: {},
+  dataInput: {},
   isLoading: false,
-  isValidQrCode: false,
+  isErrorScan: false,
+  valueScnanner: '',
 };
-
+//202308100002-IHQ-A002
 export const counterSlice = createSlice({
   name: 'saveDataSlice',
   initialState,
   reducers: {
-    setData: (state, action) => {
-      state.saveData = action.payload;
+    setDataScanner: (state, action) => {
+      state.dataScan = action.payload;
+    },
+    setDataInput: (state, action) => {
+      state.dataInput = action.payload;
     },
     setIsLoading: (state, action) => {
       state.isLoading = action.payload;
     },
-    setIsValidQrCode: (state, action) => {
-      state.isValidQrCode = action.payload;
+    setIsErrorScan: (state, action) => {
+      state.isErrorScan = action.payload;
+    },
+    setValueScanner: (state, action) => {
+      state.valueScnanner = action.payload;
     },
   },
 });
-export const { setData, setIsLoading, setIsValidQrCode } = counterSlice.actions;
+export const {
+  setDataScanner,
+  setIsLoading,
+  setIsErrorScan,
+  setDataInput,
+  setValueScanner,
+} = counterSlice.actions;
 
 export default counterSlice.reducer;
