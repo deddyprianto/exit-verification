@@ -1,10 +1,7 @@
-import scanners from '@/assets/img/scanners.png';
 import { SVGQRScanner } from '../svg';
 import { useState } from 'react';
 import { ModaIRefInput } from '../Modal/ModaIRefInput';
-import { ErrorMessage } from '../Modal/MessageScanner';
 import Scanner from './Scanner';
-import { useSelector } from 'react-redux';
 
 export default function MainCP() {
   const [isOpen, setIsOpen] = useState(false);
