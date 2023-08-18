@@ -1,27 +1,28 @@
+import { useEffect, useState } from 'react';
 import { ArrowLeft, ArrotRight } from '../svg';
 import { RenderHeaderTable, RenderBodyTable } from './HeadBodyTable';
+
 export default function Table({ data }) {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [dataPaginate, setDataPaginate] = useState([]);
+  const itemsPerPage = 3;
+
   function paginateArray(data, currentPage, itemsPerPage) {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-    return data.slice(startIndex, endIndex);
+    return data?.slice(startIndex, endIndex);
   }
 
-  const d = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; // Sample array data
-  const itemsPerPage = 3; // Number of items per page
-
-  // Initial state
-  let currentPage = 1;
-  let paginatedData = paginateArray(d, currentPage, itemsPerPage);
-  // // When the "Next" button is pressed
-  // currentPage++;
-  // paginatedData = paginateArray(data, currentPage, itemsPerPage);
-  // console.log(paginatedData);
-
-  // // When the "Prev" button is pressed
-  // currentPage--;
-  // paginatedData = paginateArray(data, currentPage, itemsPerPage);
-  // console.log(paginatedData);
+  useEffect(() => {
+    if (data) {
+      let paginatedData = paginateArray(
+        data?.details,
+        currentPage,
+        itemsPerPage
+      );
+      setDataPaginate(paginatedData);
+    }
+  }, [currentPage, data]);
 
   return (
     <div className='flex flex-col'>
@@ -30,7 +31,7 @@ export default function Table({ data }) {
           <div className='overflow-hidden border border-gray-200 rounded-lg'>
             <table className='min-w-full divide-y divide-gray-200 dark:divide-gray-700'>
               <RenderHeaderTable />
-              {data?.details?.map((items) => {
+              {dataPaginate?.map((items) => {
                 return <RenderBodyTable key={items} data={items} />;
               })}
             </table>
@@ -38,13 +39,25 @@ export default function Table({ data }) {
         </div>
       </div>
       <div className='w-full flex justify-end items-center mt-[8px]'>
-        <div className='w-[54px] h-[54px] flex justify-center items-center border border-[#D6D6D6] cursor-pointer'>
+        <div
+          onClick={() => {
+            setCurrentPage((prev) => --prev);
+            paginateArray(data?.details, currentPage, itemsPerPage);
+          }}
+          className='w-[54px] h-[54px] flex justify-center items-center border border-[#D6D6D6] cursor-pointer'
+        >
           <ArrowLeft />
         </div>
         <div className='text-[25px] text-[#9D9D9D] font-semibold mx-[24px] w-[100px] text-center'>
           1/2
         </div>
-        <div className='w-[54px] h-[54px] flex justify-center items-center border border-[#D6D6D6] cursor-pointer'>
+        <div
+          onClick={() => {
+            setCurrentPage((prev) => ++prev);
+            paginateArray(data?.details, currentPage, itemsPerPage);
+          }}
+          className='w-[54px] h-[54px] flex justify-center items-center border border-[#D6D6D6] cursor-pointer'
+        >
           <ArrotRight />
         </div>
       </div>

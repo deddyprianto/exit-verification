@@ -2,7 +2,6 @@ import { useSelector } from 'react-redux';
 
 export default function Footer() {
   const data = useSelector((state) => state.dataUser.dataScan);
-  console.log(data);
   return (
     <div className='p-[16px] absolute bottom-0 w-full'>
       <div className='flex justify-between items-center text-[16px] font-bold bg-[#F9F9F9] h-[40px] p-[8px]'>
