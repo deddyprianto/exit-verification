@@ -1,10 +1,8 @@
 import banner from '@/assets/img/image.png';
 import logo from '@/assets/img/logo.png';
 import { SVGDate, SVGLocation } from '../svg';
-import { useSelector } from 'react-redux';
 
-export default function Header() {
-  const data = useSelector((state) => state.dataUser.saveData);
+export default function Header({ outletAddress }) {
   return (
     <div
       style={{
@@ -25,7 +23,7 @@ export default function Header() {
         <div className='justify-items-end h-[48px] text-[18px]  font-medium lg:text-[24px]'>
           <div className='flex items-center justify-end'>
             <SVGLocation />
-            <div className='ml-[8px]'>Head Quarter</div>
+            <div className='ml-[8px]'>{outletAddress}</div>
           </div>
           <div className='flex items-center mt-[16px]'>
             <SVGDate />

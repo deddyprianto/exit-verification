@@ -1,11 +1,8 @@
 import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { SVGIconSeru, SVGQRScanner } from '../svg';
-import { useDispatch } from 'react-redux';
-import { setIsErrorScan, setValueScanner } from '@/feature/saveDataSlice';
 
 export function ErrorMessage({ isErrorScan }) {
-  const dispatch = useDispatch();
   return (
     <Transition appear show={isErrorScan} as={Fragment}>
       <Dialog as='div' className='relative z-10' onClose={() => isErrorScan}>
@@ -53,8 +50,7 @@ export function ErrorMessage({ isErrorScan }) {
                     <SVGQRScanner color='white' />
                     <div
                       onClick={() => {
-                        dispatch(setValueScanner(''));
-                        dispatch(setIsErrorScan(false));
+                        window.location.reload();
                       }}
                       className='text-white p-[8px] ml-[8px] rounded-[4px] text-[24px] font-medium'
                     >
