@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useEffect } from 'react';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import {
@@ -8,60 +8,62 @@ import {
 } from '@/feature/saveDataSlice';
 import { useRouter } from 'next/navigation';
 import { setRefNo } from '@/feature/saveDataPersisted';
-import { debounce } from 'lodash';
 
-export default function Scanner() {
-  const [isScannDetected, setIsScannDetected] = useState(true);
-  const [valueScanner, setValueScanner] = useState('');
+export default function Scanner({ hiddenField }) {
+  const inputRef = useRef(null);
   const route = useRouter();
   const dispatch = useDispatch();
 
-  const handleScannerValueDetected = async (scannerValue) => {
-    if (scannerValue) {
+  const handleAnyElementClick = () => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('click', handleAnyElementClick);
+    // clean up
+    return () => {
+      document.removeEventListener('click', handleAnyElementClick);
+    };
+  }, []);
+
+  const handleKeyPress = async (event) => {
+    if (event.key === 'Enter') {
+      const scannerValue = event.target.value;
       try {
         dispatch(setIsLoading(true));
         const res = await axios.get(
           `https://api-fareastflora.proseller-demo.com/integration/api/v1/transactions/byTransactionRefNo/${scannerValue}`,
           {
             headers: {
-              'User-Agent': 'Apidog/1.0.0 (https://apidog.com)',
               Authorization:
                 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl91c2UiOiJhY2Nlc3MiLCJ0eXBlIjoiaWRlbnRpdHlQb29sIiwiY29tcGFueUlkIjoiY29tcGFueTo6YjA1NTQ0ODgtMTI3MS00YjI5LTgwYjAtZTM5ZjllZTFjNjVlIiwiY29tcGFueU5hbWUiOiJmYXJlYXN0ZmxvcmEiLCJkb21haW5OYW1lIjoiYXBpLWZhcmVhc3RmbG9yYS5wcm9zZWxsZXItZGVtby5jb20ifQ.sldfM1vhkryUfL3yV_FZYF16R0trmz250U4r6UW7Gbs',
               'Content-Type': 'application/json',
             },
           }
         );
-        setIsScannDetected(true);
         dispatch(setDataScanner(res.data.data));
         dispatch(setIsLoading(false));
         dispatch(setRefNo(scannerValue));
+        inputRef.current.value = '';
         route.push('/thankyoupage');
       } catch (error) {
+        inputRef.current.value = '';
         dispatch(setIsErrorScan(true));
-        console.log('err', error);
+        console.log(error);
       }
     }
-  };
-
-  const debounceHandleScannerValueDetected = debounce(
-    handleScannerValueDetected,
-    1000
-  );
-
-  const handleInputChange = (event) => {
-    const newValue = event.target.value;
-    setValueScanner(newValue);
-    debounceHandleScannerValueDetected(newValue);
   };
 
   return (
     <div className='h-[350px] bg-white'>
       <input
-        value={valueScanner}
-        onChange={handleInputChange}
+        ref={inputRef}
+        onKeyDown={handleKeyPress}
         autoFocus
-        className={`w-full p-[16px] text-center text-2xl text-white ${
-          !isScannDetected && 'outline-none hidden'
+        className={`w-full p-[16px] text-center text-2xl ${
+          hiddenField === 'true' && 'text-transparent outline-none'
         }`}
       />
     </div>

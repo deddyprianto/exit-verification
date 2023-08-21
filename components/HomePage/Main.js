@@ -3,11 +3,11 @@ import { useState } from 'react';
 import { ModaIRefInput } from '../Modal/ModaIRefInput';
 import Scanner from './Scanner';
 
-export default function MainCP() {
+export default function MainCP({ hiddenField }) {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div className='p-[24px] bg-white'>
-      <Scanner />
+      <Scanner hiddenField={hiddenField} />
       <div className='h-[54px] mt-[16px] flex justify-center items-center lg:h-[72px]'>
         <SVGQRScanner />
         <div className='text-[24px] font-medium text-black'>

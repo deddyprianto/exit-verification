@@ -16,7 +16,6 @@ export default function Thankyou() {
   useEffect(() => {
     const handleScanner = async () => {
       try {
-        dispatch(setIsLoading(true));
         const res = await axios.get(
           `https://api-fareastflora.proseller-demo.com/integration/api/v1/transactions/byTransactionRefNo/${refNo}`,
           {
@@ -28,7 +27,6 @@ export default function Thankyou() {
             },
           }
         );
-        dispatch(setIsLoading(false));
         dispatch(setDataScanner(res.data.data));
         dispatch(setIsLoading(false));
       } catch (error) {

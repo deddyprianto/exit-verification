@@ -46,14 +46,14 @@ export function ErrorMessage({ isErrorScan }) {
                 </div>
 
                 <div className='p-[16px] h-[90px]'>
-                  <div className='flex justify-center items-center bg-[#003F24] p-[8px] h-[57px] cursor-pointer'>
+                  <div
+                    onClick={() => {
+                      window.location.reload();
+                    }}
+                    className='flex justify-center items-center bg-[#003F24] p-[8px] h-[57px] cursor-pointer'
+                  >
                     <SVGQRScanner color='white' />
-                    <div
-                      onClick={() => {
-                        window.location.reload();
-                      }}
-                      className='text-white p-[8px] ml-[8px] rounded-[4px] text-[24px] font-medium'
-                    >
+                    <div className='text-white p-[8px] ml-[8px] rounded-[4px] text-[24px] font-medium'>
                       RE-SCAN RECEIPT
                     </div>
                   </div>
