@@ -11,7 +11,7 @@ import { setRefNo } from '@/feature/saveDataPersisted';
 import { debounce } from 'lodash';
 
 export default function Scanner() {
-  const [isScannDetected, setIsScannDetected] = useState(false);
+  const [isScannDetected, setIsScannDetected] = useState(true);
   const [valueScanner, setValueScanner] = useState('');
   const route = useRouter();
   const dispatch = useDispatch();
