@@ -33,9 +33,9 @@ export const RenderBodyTable = ({ data }) => {
   return (
     <tbody className='bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900 text-[14px] lg:text-[24px]'>
       <tr>
-        <td className='w-[469px] lg:w-[744px]'>
-          <div className='grid grid-cols-17 bg-red-500'>
-            <div className='relative w-16 h-16'>
+        <td className='w-[469px] lg:w-[744px] '>
+          <div className='grid grid-cols-17 mt-6 '>
+            <div className='relative w-[36px] h-[36px] justify-self-center '>
               {isProductImageExist ? (
                 <Image src={data?.product?.defaultImageURL} alt='image' fill />
               ) : (
@@ -47,27 +47,46 @@ export const RenderBodyTable = ({ data }) => {
               <div>{data?.product?.name}</div>
             </div>
           </div>
+          {isModifierExist?.map((item) => {
+            return item?.modifier?.details.map((itemMod) => {
+              return (
+                <div key={itemMod?.id} className='grid grid-cols-17'>
+                  <div></div>
+                  <div className='justify-self-center'>
+                    {itemMod?.quantity}x
+                  </div>
+                  <div>{itemMod?.name}</div>
+                </div>
+              );
+            });
+          })}
+        </td>
 
-          {/* MODIFIER */}
-          {isModifierExist?.map((item) => (
-            <div key={item.id} className='grid grid-cols-17'>
-              <div></div>
-              <div className='justify-self-center'>1x</div>
-              <div>
-                Repotting Service Lorem ipsum dolor sit amet, consectetur
-                adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                dolore magna aliqua
-              </div>
+        <td className='w-[96px] lg:w-[128px] text-center relative '>
+          <div className='absolute top-6 left-9'>$ {data?.nettAmount}</div>
+          <div className='absolute bottom-0 left-9'>
+            {isModifierExist?.map((item) => {
+              return item?.modifier?.details.map((itemMod) => {
+                return <div key={itemMod?.id}>$ {itemMod?.price}</div>;
+              });
+            })}
+          </div>
+        </td>
+        <td className='w-[96px] lg:w-[128px] text-center relative'>
+          <div className='absolute top-6 left-12'>{data?.quantity}</div>
+          <div className='text-transparent mt-5'>
+            <div className='mt-5'>
+              {isModifierExist?.map((item) => {
+                return item?.modifier?.details.map((itemMod) => {
+                  return (
+                    <div className='text-transparent' key={itemMod?.id}>
+                      $ {itemMod?.price}
+                    </div>
+                  );
+                });
+              })}
             </div>
-          ))}
-        </td>
-        <td className='w-[96px] lg:w-[128px] text-center bg-red-400 '>
-          <div className='bg-purple-600'>$ {data?.nettAmount}</div>
-          <div>$ 500</div>
-        </td>
-        <td className='w-[96px] lg:w-[128px] text-center bg-green-400'>
-          <div>{data?.quantity}</div>
-          <div className='text-transparent'>-</div>
+          </div>
         </td>
       </tr>
     </tbody>

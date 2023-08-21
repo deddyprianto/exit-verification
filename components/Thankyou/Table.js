@@ -1,8 +1,16 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ArrowLeft, ArrotRight } from '../svg';
 import { RenderHeaderTable, RenderBodyTable } from './HeadBodyTable';
+import { useDispatch } from 'react-redux';
+import { setBagItem } from '@/feature/saveDataSlice';
 
 export default function Table({ data }) {
+  const a = data?.details;
+  const dispatch = useDispatch();
+  const [isArrayFiltered, setIsArrayFiltered] = useState([]);
+  const [dataSlice, setDataSlice] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+
   const d = [
     {
       billDiscAmount: 0,
@@ -147,9 +155,9 @@ export default function Table({ data }) {
         productModifiers: [],
         imageFiles: [],
         custom: {},
-        name: 'Ang Bao Packet',
+        name: 'Ang Bao Packet asd',
         printSequence: 102,
-        id: '54222c2c-24aa-46ab-8668-fce5396672ee',
+        id: '458340f2-1506-41e7-9bbd-28900eba1045',
         variants: [],
         categoryName: 'Packet',
         retailPrice: 50,
@@ -654,11 +662,28 @@ export default function Table({ data }) {
     },
   ];
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 1;
-  const totalPages = Math.ceil(d?.length / itemsPerPage) || 1;
+  useEffect(() => {
+    const filteredData = a?.filter((item) => {
+      if (item?.product?.id === '458340f2-1506-41e7-9bbd-28900eba1045') {
+        setIsArrayFiltered((prevArray) => [...prevArray, item]);
+        return false;
+      }
+      return true;
+    });
 
-  const paginatedData = d?.slice(
+    setDataSlice(filteredData);
+  }, [a]);
+
+  useEffect(() => {
+    if (isArrayFiltered.length > 0) {
+      dispatch(setBagItem(isArrayFiltered));
+    }
+  }, [isArrayFiltered]);
+
+  const itemsPerPage = 3;
+  const totalPages = Math.ceil(dataSlice?.length / itemsPerPage) || 1;
+
+  const paginatedData = dataSlice?.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
@@ -668,8 +693,6 @@ export default function Table({ data }) {
       setCurrentPage(currentPage + 1);
     }
   };
-
-  // 458340f2-1506-41e7-9bbd-28900eba1045
 
   const handlePrevClick = () => {
     if (currentPage > 1) {
@@ -708,11 +731,11 @@ export default function Table({ data }) {
         </div>
         <button
           disabled={
-            currentPage === totalPages || data?.details?.length < itemsPerPage
+            currentPage === totalPages || dataSlice?.length < itemsPerPage
           }
           onClick={handleNextClick}
           className={`w-[54px] h-[54px] flex justify-center items-center border border-[#D6D6D6] cursor-pointer ${
-            currentPage === totalPages || data?.details?.length < itemsPerPage
+            currentPage === totalPages || dataSlice?.length < itemsPerPage
               ? 'opacity-30'
               : 'opacity-100'
           }`}

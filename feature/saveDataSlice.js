@@ -5,6 +5,7 @@ const initialState = {
   isLoading: false,
   isErrorScan: false,
   valueScnanner: '',
+  bagItem: [],
 };
 export const counterSlice = createSlice({
   name: 'saveDataSlice',
@@ -25,6 +26,9 @@ export const counterSlice = createSlice({
     setValueScanner: (state, action) => {
       state.valueScnanner = action.payload;
     },
+    setBagItem: (state, action) => {
+      state.bagItem = action.payload;
+    },
   },
 });
 export const {
@@ -33,6 +37,7 @@ export const {
   setIsErrorScan,
   setDataInput,
   setValueScanner,
+  setBagItem,
 } = counterSlice.actions;
 
 export default counterSlice.reducer;
