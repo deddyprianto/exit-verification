@@ -126,7 +126,7 @@ export const ArrowLeft = () => {
     >
       <path
         d='M22.5 27L13.5 18L22.5 9'
-        stroke='#9D9D9D'
+        stroke='black'
         strokeWidth={2}
         strokeLinecap='round'
         strokeLinejoin='round'

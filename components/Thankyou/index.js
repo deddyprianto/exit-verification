@@ -40,7 +40,7 @@ export default function Thankyou() {
     <div className='relative h-screen'>
       <Header />
       <ItemList />
-      <Footer />
+      {/* <Footer /> */}
       <LoadingPopup isLoading={isLoading} />
     </div>
   );

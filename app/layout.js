@@ -7,6 +7,10 @@ const PopinsPlus = Poppins({
 });
 import ProviderSession from '@/components/Provider';
 
+export const metadata = {
+  title: 'Exit Verification',
+  description: '...',
+};
 export default function RootLayout({ children }) {
   return (
     <html lang='en'>
