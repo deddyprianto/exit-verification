@@ -9,7 +9,7 @@ import {
 import { useRouter } from 'next/navigation';
 import { setRefNo } from '@/feature/saveDataPersisted';
 
-export default function Scanner({ hiddenField }) {
+export default function Scanner({ hiddenField, baseURL, token }) {
   const inputRef = useRef(null);
   const route = useRouter();
   const dispatch = useDispatch();
@@ -34,11 +34,10 @@ export default function Scanner({ hiddenField }) {
       try {
         dispatch(setIsLoading(true));
         const res = await axios.get(
-          `https://api-fareastflora.proseller-demo.com/integration/api/v1/transactions/byTransactionRefNo/${scannerValue}`,
+          `${baseURL}/integration/api/v1/transactions/byTransactionRefNo/${scannerValue}`,
           {
             headers: {
-              Authorization:
-                'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl91c2UiOiJhY2Nlc3MiLCJ0eXBlIjoiaWRlbnRpdHlQb29sIiwiY29tcGFueUlkIjoiY29tcGFueTo6YjA1NTQ0ODgtMTI3MS00YjI5LTgwYjAtZTM5ZjllZTFjNjVlIiwiY29tcGFueU5hbWUiOiJmYXJlYXN0ZmxvcmEiLCJkb21haW5OYW1lIjoiYXBpLWZhcmVhc3RmbG9yYS5wcm9zZWxsZXItZGVtby5jb20ifQ.sldfM1vhkryUfL3yV_FZYF16R0trmz250U4r6UW7Gbs',
+              Authorization: `Bearer ${token}`,
               'Content-Type': 'application/json',
             },
           }

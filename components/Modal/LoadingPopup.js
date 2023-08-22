@@ -1,7 +1,11 @@
 import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { useDispatch } from 'react-redux';
-import { setIsErrorScan, setValueScanner } from '@/feature/saveDataSlice';
+import {
+  setIsErrorScan,
+  setIsLoading,
+  setValueScanner,
+} from '@/feature/saveDataSlice';
 import iconLoading from '@/assets/img/iconLoading.png';
 
 export function LoadingPopup({ isLoading }) {
@@ -48,14 +52,15 @@ export function LoadingPopup({ isLoading }) {
                 </div>
 
                 <div className='p-[16px] h-[90px]'>
-                  <div className='flex justify-center items-center border border-[#003F24] p-[8px] h-[57px] cursor-pointer'>
-                    <div
-                      onClick={() => {
-                        dispatch(setValueScanner(''));
-                        dispatch(setIsErrorScan(false));
-                      }}
-                      className='text-[#003F24] p-[8px] ml-[8px] rounded-[4px] text-[24px] font-medium'
-                    >
+                  <div
+                    onClick={() => {
+                      dispatch(setValueScanner(''));
+                      dispatch(setIsErrorScan(false));
+                      dispatch(setIsLoading(false));
+                    }}
+                    className='flex justify-center items-center border border-[#003F24] p-[8px] h-[57px] cursor-pointer'
+                  >
+                    <div className='text-[#003F24] p-[8px] ml-[8px] rounded-[4px] text-[24px] font-medium'>
                       CANCEL
                     </div>
                   </div>

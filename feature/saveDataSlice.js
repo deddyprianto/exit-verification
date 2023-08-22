@@ -6,6 +6,8 @@ const initialState = {
   isErrorScan: false,
   valueScnanner: '',
   bagItem: [],
+  verifyItem: { showPopup: false },
+  isRefreshPage: false,
 };
 export const counterSlice = createSlice({
   name: 'saveDataSlice',
@@ -29,6 +31,12 @@ export const counterSlice = createSlice({
     setBagItem: (state, action) => {
       state.bagItem = action.payload;
     },
+    setVerifyItems: (state, action) => {
+      state.verifyItem = action.payload;
+    },
+    setIsRefreshPage: (state, action) => {
+      state.isRefreshPage = action.payload;
+    },
   },
 });
 export const {
@@ -38,6 +46,8 @@ export const {
   setDataInput,
   setValueScanner,
   setBagItem,
+  setVerifyItems,
+  setIsRefreshPage,
 } = counterSlice.actions;
 
 export default counterSlice.reducer;

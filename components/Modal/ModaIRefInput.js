@@ -6,7 +6,7 @@ import { setRefNo } from '@/feature/saveDataPersisted';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/navigation';
 
-export function ModaIRefInput({ setIsOpen, isOpen }) {
+export function ModaIRefInput({ setIsOpen, isOpen, baseURL, token }) {
   const route = useRouter();
   const dispatch = useDispatch();
   const inputRef = useRef();
@@ -14,12 +14,10 @@ export function ModaIRefInput({ setIsOpen, isOpen }) {
     try {
       dispatch(setIsLoading(true));
       const res = await axios.get(
-        `https://api-fareastflora.proseller-demo.com/integration/api/v1/transactions/byTransactionRefNo/${inputRef.current.value}`,
+        `${baseURL}/integration/api/v1/transactions/byTransactionRefNo/${inputRef.current.value}`,
         {
           headers: {
-            'User-Agent': 'Apidog/1.0.0 (https://apidog.com)',
-            Authorization:
-              'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl91c2UiOiJhY2Nlc3MiLCJ0eXBlIjoiaWRlbnRpdHlQb29sIiwiY29tcGFueUlkIjoiY29tcGFueTo6YjA1NTQ0ODgtMTI3MS00YjI5LTgwYjAtZTM5ZjllZTFjNjVlIiwiY29tcGFueU5hbWUiOiJmYXJlYXN0ZmxvcmEiLCJkb21haW5OYW1lIjoiYXBpLWZhcmVhc3RmbG9yYS5wcm9zZWxsZXItZGVtby5jb20ifQ.sldfM1vhkryUfL3yV_FZYF16R0trmz250U4r6UW7Gbs',
+            Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
           },
         }

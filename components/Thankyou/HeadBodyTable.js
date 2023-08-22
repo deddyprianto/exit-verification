@@ -50,7 +50,7 @@ export const RenderBodyTable = ({ data }) => {
           {isModifierExist?.map((item) => {
             return item?.modifier?.details.map((itemMod) => {
               return (
-                <div key={itemMod?.id} className='grid grid-cols-17'>
+                <div key={itemMod?.productID} className='grid grid-cols-17'>
                   <div></div>
                   <div className='justify-self-center'>
                     {itemMod?.quantity}x
@@ -62,12 +62,12 @@ export const RenderBodyTable = ({ data }) => {
           })}
         </td>
 
-        <td className='w-[96px] lg:w-[128px] text-center relative '>
-          <div className='absolute top-6 left-9'>$ {data?.nettAmount}</div>
+        <td className='w-[96px] lg:w-[128px] text-center relative'>
+          <div className='absolute top-6 left-9 '>$ {data?.nettAmount}</div>
           <div className='absolute bottom-0 left-9'>
             {isModifierExist?.map((item) => {
               return item?.modifier?.details.map((itemMod) => {
-                return <div key={itemMod?.id}>$ {itemMod?.price}</div>;
+                return <div key={itemMod?.productID}>$ {itemMod?.price}</div>;
               });
             })}
           </div>
@@ -79,7 +79,7 @@ export const RenderBodyTable = ({ data }) => {
               {isModifierExist?.map((item) => {
                 return item?.modifier?.details.map((itemMod) => {
                   return (
-                    <div className='text-transparent' key={itemMod?.id}>
+                    <div className='text-transparent' key={itemMod?.productID}>
                       $ {itemMod?.price}
                     </div>
                   );

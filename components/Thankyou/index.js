@@ -8,7 +8,7 @@ import axios from 'axios';
 import { LoadingPopup } from '../Modal/LoadingPopup';
 import Footer from './Footer';
 
-export default function Thankyou() {
+export default function Thankyou({ baseURL, token }) {
   const dispatch = useDispatch();
   const refNo = useSelector((state) => state.dataPersist.refNo);
   const isLoading = useSelector((state) => state.dataUser.isLoading);
@@ -17,13 +17,11 @@ export default function Thankyou() {
     const handleScanner = async () => {
       try {
         const res = await axios.get(
-          `https://api-fareastflora.proseller-demo.com/integration/api/v1/transactions/byTransactionRefNo/${refNo}`,
+          `${baseURL}/integration/api/v1/transactions/byTransactionRefNo/${refNo}`,
           {
             headers: {
-              Authorization:
-                'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl91c2UiOiJhY2Nlc3MiLCJ0eXBlIjoiaWRlbnRpdHlQb29sIiwiY29tcGFueUlkIjoiY29tcGFueTo6YjA1NTQ0ODgtMTI3MS00YjI5LTgwYjAtZTM5ZjllZTFjNjVlIiwiY29tcGFueU5hbWUiOiJmYXJlYXN0ZmxvcmEiLCJkb21haW5OYW1lIjoiYXBpLWZhcmVhc3RmbG9yYS5wcm9zZWxsZXItZGVtby5jb20ifQ.sldfM1vhkryUfL3yV_FZYF16R0trmz250U4r6UW7Gbs',
+              Authorization: `Bearer ${token}`,
               'Content-Type': 'application/json',
-              'User-Agent': 'Apidog/1.0.0 (https://apidog.com)',
             },
           }
         );
@@ -40,7 +38,7 @@ export default function Thankyou() {
     <div className='relative h-screen'>
       <Header />
       <ItemList />
-      <Footer />
+      <Footer baseURL={baseURL} token={token} />
       <LoadingPopup isLoading={isLoading} />
     </div>
   );
