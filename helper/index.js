@@ -38,3 +38,36 @@ export const changeFormatDate = (dateString) => {
 
   return formattedDate;
 };
+
+ export const costumFormatDateNow = () => {
+   const months = [
+     'Jan',
+     'Feb',
+     'Mar',
+     'Apr',
+     'May',
+     'Jun',
+     'Jul',
+     'Aug',
+     'Sep',
+     'Oct',
+     'Nov',
+     'Dec',
+   ];
+   const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+   const now = new Date();
+   const dayOfWeek = daysOfWeek[now.getDay()];
+   const month = months[now.getMonth()];
+   const dayOfMonth = now.getDate();
+   const year = now.getFullYear();
+   const hours = now.getHours() % 12 || 12;
+   const minutes = now.getMinutes();
+   const period = now.getHours() < 12 ? 'AM' : 'PM';
+
+   const formattedDate = `${dayOfWeek}, ${month} ${dayOfMonth}, ${year} - ${hours}.${minutes
+     .toString()
+     .padStart(2, '0')} ${period}`;
+   return formattedDate;
+ };
+

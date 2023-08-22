@@ -1,6 +1,7 @@
 import banner from '@/assets/img/bannerThankyou.png';
 import logo from '@/assets/img/logo.png';
 import { SVGDate, SVGLocation } from '../svg';
+import { costumFormatDateNow } from '@/helper';
 
 export default function Header({ outletAddress }) {
   return (
@@ -27,7 +28,7 @@ export default function Header({ outletAddress }) {
           </div>
           <div className='flex items-center mt-[16px]'>
             <SVGDate />
-            <div className='ml-[8px]'>Mon, 15 May 2023</div>
+            <div className='ml-[8px]'>{costumFormatDateNow()}</div>
           </div>
         </div>
       </div>
