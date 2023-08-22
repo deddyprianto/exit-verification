@@ -8,7 +8,7 @@ import axios from 'axios';
 import { LoadingPopup } from '../Modal/LoadingPopup';
 import Footer from './Footer';
 
-export default function Thankyou({ baseURL, token }) {
+export default function Thankyou({ baseURL, token, outletAddress }) {
   const dispatch = useDispatch();
   const refNo = useSelector((state) => state.dataPersist.refNo);
   const isLoading = useSelector((state) => state.dataUser.isLoading);
@@ -36,7 +36,7 @@ export default function Thankyou({ baseURL, token }) {
 
   return (
     <div className='relative h-screen'>
-      <Header />
+      <Header outletAddress={outletAddress} />
       <ItemList />
       <Footer baseURL={baseURL} token={token} />
       <LoadingPopup isLoading={isLoading} />
