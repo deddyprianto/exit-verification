@@ -6,12 +6,7 @@ import Header from './Header';
 import MainCP from './Main';
 import { useSelector } from 'react-redux';
 
-export default function HomePage({
-  outletAddress,
-  hiddenField,
-  baseURL,
-  token,
-}) {
+export default function HomePage({ outletAddress, baseURL, token }) {
   const isErrorScan = useSelector((state) => state.dataUser.isErrorScan);
   const isLoading = useSelector((state) => state.dataUser.isLoading);
   const isRefreshPage = useSelector((state) => state.dataUser.isRefreshPage);
@@ -25,7 +20,7 @@ export default function HomePage({
   return (
     <div>
       <Header outletAddress={outletAddress} />
-      <MainCP hiddenField={hiddenField} baseURL={baseURL} token={token} />
+      <MainCP baseURL={baseURL} token={token} />
       <ErrorMessage isErrorScan={isErrorScan} />
       <LoadingPopup isLoading={isLoading} />
     </div>

@@ -9,7 +9,7 @@ import {
 import { useRouter } from 'next/navigation';
 import { setRefNo } from '@/feature/saveDataPersisted';
 
-export default function Scanner({ hiddenField, baseURL, token }) {
+export default function Scanner({ baseURL, token }) {
   const inputRef = useRef(null);
   const route = useRouter();
   const dispatch = useDispatch();
@@ -61,9 +61,7 @@ export default function Scanner({ hiddenField, baseURL, token }) {
         ref={inputRef}
         onKeyDown={handleKeyPress}
         autoFocus
-        className={`w-full p-[16px] text-center text-2xl ${
-          hiddenField === 'true' && 'text-transparent outline-none'
-        }`}
+        className='w-full p-[16px]  text-center text-2xl text-transparent outline-none'
       />
     </div>
   );

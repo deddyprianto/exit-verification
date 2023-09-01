@@ -2,8 +2,10 @@ import banner from '@/assets/img/bannerThankyou.png';
 import logo from '@/assets/img/logo.png';
 import { SVGDate, SVGLocation } from '../svg';
 import { costumFormatDateNow } from '@/helper';
+import { useClockInterval } from '@/hooks/useClockInterval';
 
 export default function Header({ outletAddress }) {
+  const formattedTime = useClockInterval();
   return (
     <div
       style={{
@@ -28,7 +30,10 @@ export default function Header({ outletAddress }) {
           </div>
           <div className='flex items-center mt-[16px]'>
             <SVGDate />
-            <div className='ml-[8px]'>{costumFormatDateNow()}</div>
+            <div className='ml-[8px]'>
+              {costumFormatDateNow()}
+              {formattedTime}
+            </div>
           </div>
         </div>
       </div>

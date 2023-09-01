@@ -61,13 +61,8 @@ export const changeFormatDate = (dateString) => {
    const month = months[now.getMonth()];
    const dayOfMonth = now.getDate();
    const year = now.getFullYear();
-   const hours = now.getHours() % 12 || 12;
-   const minutes = now.getMinutes();
-   const period = now.getHours() < 12 ? 'AM' : 'PM';
 
-   const formattedDate = `${dayOfWeek}, ${month} ${dayOfMonth}, ${year} - ${hours}.${minutes
-     .toString()
-     .padStart(2, '0')} ${period}`;
+   const formattedDate = `${dayOfWeek}, ${month} ${dayOfMonth}, ${year} - `;
    return formattedDate;
  };
 
