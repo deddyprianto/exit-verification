@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "deploy:exit-verification-demo": "next build && aws s3 --profile demo sync out s3://exit-verification-web-demo --acl public-read"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.16",
