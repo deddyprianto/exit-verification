@@ -5,11 +5,18 @@ import { ErrorMessage } from '../Modal/MessageScanner';
 import Header from './Header';
 import MainCP from './Main';
 import { useSelector } from 'react-redux';
+import { PopUpIsVerified } from '../Modal/PopUpIsVerified';
+import { PopUpInvalidTransaction } from '../Modal/PopUpInvalidTransaction';
 
 export default function HomePage({ outletAddress, baseURL, token }) {
+  // const myBoolDebug = debug === 'true';
   const isErrorScan = useSelector((state) => state.dataUser.isErrorScan);
   const isLoading = useSelector((state) => state.dataUser.isLoading);
   const isRefreshPage = useSelector((state) => state.dataUser.isRefreshPage);
+  const isVerify = useSelector((state) => state.dataUser.isVerify);
+  const isTransactionIsInvalid = useSelector(
+    (state) => state.dataUser.isTransactionIsInvalid
+  );
 
   useEffect(() => {
     if (isRefreshPage) {
@@ -23,6 +30,10 @@ export default function HomePage({ outletAddress, baseURL, token }) {
       <MainCP baseURL={baseURL} token={token} />
       <ErrorMessage isErrorScan={isErrorScan} />
       <LoadingPopup isLoading={isLoading} />
+      <PopUpIsVerified isVerify={isVerify} />
+      <PopUpInvalidTransaction
+        isTransactionIsInvalid={isTransactionIsInvalid}
+      />
     </div>
   );
 }

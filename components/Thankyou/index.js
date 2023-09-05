@@ -35,7 +35,7 @@ export default function Thankyou({ baseURL, token, outletAddress }) {
   }, []);
 
   return (
-    <div className='relative h-screen'>
+    <div className='h-screen grid grid-rows-15 lg:grid-rows-16'>
       <Header outletAddress={outletAddress} />
       <ItemList />
       <Footer baseURL={baseURL} token={token} />

@@ -1,4 +1,4 @@
-import banner from '@/assets/img/image.png';
+import banner from '@/assets/img/bannerExitVerification.jpeg';
 import logo from '@/assets/img/logo.png';
 import { SVGDate, SVGLocation } from '../svg';
 import { costumFormatDateNow } from '@/helper';

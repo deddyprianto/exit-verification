@@ -1,17 +1,18 @@
 import { setIsLoading, setVerifyItems } from '@/feature/saveDataSlice';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
-import { PopUpVerifyItem } from '../Modal/PopUpVerifyItem';
+import { PopUpVerifyItemCountDown } from '../Modal/PopUpVerifyItemCountDown';
 
 export default function Footer({ baseURL, token }) {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.dataUser.dataScan);
+  const payload = { customerId: data?.customer?.id };
   const handleVerifyItems = async () => {
     try {
       dispatch(setIsLoading(true));
       const res = await axios.post(
         `${baseURL}/crm/api/sales/${data?.id}/verify`,
-        { customerId: data?.customer?.id },
+        payload,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -47,7 +48,7 @@ export default function Footer({ baseURL, token }) {
       >
         <div>VERIFY ITEMS</div>
       </div>
-      <PopUpVerifyItem />
+      <PopUpVerifyItemCountDown />
     </div>
   );
 }

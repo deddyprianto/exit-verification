@@ -8,6 +8,8 @@ const initialState = {
   bagItem: [],
   verifyItem: { showPopup: false },
   isRefreshPage: false,
+  isVerify: false,
+  isTransactionIsInvalid: false,
 };
 export const counterSlice = createSlice({
   name: 'saveDataSlice',
@@ -37,6 +39,12 @@ export const counterSlice = createSlice({
     setIsRefreshPage: (state, action) => {
       state.isRefreshPage = action.payload;
     },
+    setIsVerify: (state, action) => {
+      state.isVerify = action.payload;
+    },
+    setIsTransactionIsInvalid: (state, action) => {
+      state.isTransactionIsInvalid = action.payload;
+    },
   },
 });
 export const {
@@ -48,6 +56,8 @@ export const {
   setBagItem,
   setVerifyItems,
   setIsRefreshPage,
+  setIsVerify,
+  setIsTransactionIsInvalid,
 } = counterSlice.actions;
 
 export default counterSlice.reducer;

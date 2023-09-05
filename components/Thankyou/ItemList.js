@@ -5,9 +5,8 @@ import Table from './Table';
 export default function ItemList() {
   const data = useSelector((state) => state.dataUser.dataScan);
   const bagsItem = useSelector((state) => state.dataUser.bagItem);
-
   return (
-    <div className='p-[24px] bg-white text-[24px]'>
+    <div className='p-[24px] bg-white text-[24px] overflow-y-auto'>
       <div className='flex justify-between w-full'>
         <div>
           <h1 className='text-[24px] font-semibold text-[#001E2B] lg:text-[36px]'>

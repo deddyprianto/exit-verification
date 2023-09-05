@@ -1,12 +1,18 @@
-import { Fragment, useRef } from 'react';
+import { Fragment, useRef, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import axios from 'axios';
-import { setDataScanner, setIsLoading } from '@/feature/saveDataSlice';
+import {
+  setDataScanner,
+  setIsLoading,
+  setIsTransactionIsInvalid,
+  setIsVerify,
+} from '@/feature/saveDataSlice';
 import { setRefNo } from '@/feature/saveDataPersisted';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/navigation';
 
 export function ModaIRefInput({ setIsOpen, isOpen, baseURL, token }) {
+  const [isErrorMessage, setIsErrorMessage] = useState(false);
   const route = useRouter();
   const dispatch = useDispatch();
   const inputRef = useRef();
@@ -25,9 +31,29 @@ export function ModaIRefInput({ setIsOpen, isOpen, baseURL, token }) {
       dispatch(setDataScanner(res.data.data));
       dispatch(setIsLoading(false));
       dispatch(setRefNo(inputRef.current.value));
+
+      if (
+        res?.data?.data?.isVerified &&
+        res?.data?.data?.orderingMode === 'STORECHECKOUT' &&
+        res?.data?.data?.status === 'COMPLETED'
+      ) {
+        return dispatch(setIsVerify(true));
+      }
+      if (
+        res?.data?.data?.orderingMode === 'STORECHECKOUT' &&
+        res?.data?.data?.status !== 'COMPLETED'
+      ) {
+        return dispatch(setIsTransactionIsInvalid(true));
+      }
+
+      if (res?.data?.data?.orderingMode !== 'STORECHECKOUT') {
+        return dispatch(setIsTransactionIsInvalid(true));
+      }
+
       route.push('/thankyoupage');
     } catch (error) {
-      // dispatch(setIsErrorScan(true));
+      dispatch(setIsLoading(false));
+      setIsErrorMessage(true);
       console.log('err', error);
     }
   };
@@ -68,21 +94,32 @@ export function ModaIRefInput({ setIsOpen, isOpen, baseURL, token }) {
                   </div>
                 </Dialog.Title>
 
-                <div className='p-[16px] h-[84px] lg:h-[128px]'>
+                <div
+                  className={`p-[16px] ${
+                    isErrorMessage
+                      ? 'h-[116px] lg:h-[128px]'
+                      : 'h-[84px] lg:h-[90px]'
+                  }`}
+                >
                   <input
                     ref={inputRef}
                     placeholder='Order Reference Number'
                     className='border border-[#888787] w-full px-[16px] py-[8px] outline-none text-[24px] font-normal'
                   />
-                  {/* error 116px*/}
-                  {/* <div className='text-[16px] font-medium text-[#C81720] italic mt-[8px]'>
-                    Order not found, please re-enter your reference number
-                  </div> */}
+                  {isErrorMessage && (
+                    <div className='text-[16px] font-medium text-[#C81720] italic mt-[8px]'>
+                      Order not found, please re-enter your reference number
+                    </div>
+                  )}
                 </div>
+
                 <div className='p-[16px] h-[84px] lg:h-[102px]'>
                   <div className='text-[24px] font-normal text-center flex justify-between items-center'>
                     <div
-                      onClick={() => setIsOpen(false)}
+                      onClick={() => {
+                        setIsOpen(false);
+                        setIsErrorMessage(false);
+                      }}
                       className=' flex justify-center items-center w-[256px] h-[52px] border border-[#003F24] p-[8px] mr-[8px] rounded-[4px] text-[#003F24] lg:w-[301px] lg:h-[70px]'
                     >
                       CANCEL
