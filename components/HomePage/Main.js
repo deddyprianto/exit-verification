@@ -11,7 +11,7 @@ export default function MainCP({ baseURL, token }) {
       <div className='h-[54px] mt-[16px] flex justify-center items-center lg:h-[72px]'>
         <SVGQRScanner />
         <div className='text-[24px] font-medium text-black'>
-          Please scan your receipt to verify your items.
+          Please scan your receipt to verify your items
         </div>
       </div>
 

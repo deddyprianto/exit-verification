@@ -7,7 +7,7 @@ import iconCheck from '@/assets/img/iconCheck.png';
 import { changeFormatDate } from '@/helper';
 import { useRouter } from 'next/navigation';
 
-export function PopUpVerifyItem() {
+export function PopUpVerifyItemCountDown() {
   const route = useRouter();
   const dispatch = useDispatch();
   const verifyItem = useSelector((state) => state.dataUser.verifyItem);

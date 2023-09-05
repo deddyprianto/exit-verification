@@ -3,8 +3,10 @@ import { ArrowLeft, ArrotRight } from '../svg';
 import { RenderHeaderTable, RenderBodyTable } from './HeadBodyTable';
 import { useDispatch } from 'react-redux';
 import { setBagItem } from '@/feature/saveDataSlice';
+import { useWindowSize } from '@/hooks/useWindowSize';
 
 export default function Table({ data }) {
+  const responsiveDesign = useWindowSize();
   const a = data?.details;
   const dispatch = useDispatch();
   const [isArrayFiltered, setIsArrayFiltered] = useState([]);
@@ -21,7 +23,7 @@ export default function Table({ data }) {
     });
 
     setDataSlice(filteredData);
-  }, [a]);
+  }, [data]);
 
   useEffect(() => {
     if (isArrayFiltered.length > 0) {
@@ -29,7 +31,7 @@ export default function Table({ data }) {
     }
   }, [isArrayFiltered]);
 
-  const itemsPerPage = 3;
+  const itemsPerPage = responsiveDesign.height >= 1920 ? 10 : 5;
   const totalPages = Math.ceil(dataSlice?.length / itemsPerPage) || 1;
 
   const paginatedData = dataSlice?.slice(
@@ -50,25 +52,27 @@ export default function Table({ data }) {
   };
 
   return (
-    <div className='flex flex-col'>
+    <div className='flex flex-col h-full'>
       <div>
-        <div className='inline-block min-w-full'>
-          <div className='overflow-hidden border border-gray-200 rounded-lg'>
-            <table className='min-w-full divide-y divide-gray-200 dark:divide-gray-700'>
-              <RenderHeaderTable />
-              {paginatedData?.map((items) => (
-                <RenderBodyTable key={items.id} data={items} />
-              ))}
-            </table>
+        <div className='inline-block min-w-full '>
+          <div className='overflow-hidden border border-gray-200 rounded-lg '>
+            <RenderHeaderTable />
+            {paginatedData?.map((items, i) => (
+              <RenderBodyTable
+                key={i}
+                data={items}
+                paginatedData={paginatedData}
+              />
+            ))}
           </div>
         </div>
       </div>
       <div className='w-full flex justify-end items-center mt-[8px]'>
         <button
-          disabled={currentPage === 1 || data?.details?.length < itemsPerPage}
+          disabled={currentPage === 1 || data.length < itemsPerPage}
           onClick={handlePrevClick}
           className={`w-[54px] h-[54px] flex justify-center items-center border border-[#D6D6D6] cursor-pointer ${
-            currentPage === 1 || data?.details?.length < itemsPerPage
+            currentPage === 1 || data.length < itemsPerPage
               ? 'opacity-30'
               : 'opacity-100'
           } `}
