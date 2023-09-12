@@ -6,6 +6,10 @@ import { PopUpVerifyItemCountDown } from '../Modal/PopUpVerifyItemCountDown';
 export default function Footer({ baseURL, token }) {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.dataUser.dataScan);
+  const dataSlicePaginate = useSelector(
+    (state) => state.dataUser.dataSlicePaginate
+  );
+
   const payload = { customerId: data?.customer?.id };
   const handleVerifyItems = async () => {
     try {
@@ -40,7 +44,7 @@ export default function Footer({ baseURL, token }) {
     <div className='p-[24px] absolute bottom-0 w-full h-[134px] lg:h-[244px]'>
       <div className='flex justify-between items-center text-[16px] font-bold bg-[#F9F9F9] h-[40px] p-[8px] lg:h-[102px] lg:p-[24px] lg:text-[36px]'>
         <div>Total Quantity</div>
-        <div>{data?.details?.length} items</div>
+        <div>{dataSlicePaginate} items</div>
       </div>
       <div
         onClick={handleVerifyItems}

@@ -10,6 +10,7 @@ const initialState = {
   isRefreshPage: false,
   isVerify: false,
   isTransactionIsInvalid: false,
+  dataSlicePaginate: [],
 };
 export const counterSlice = createSlice({
   name: 'saveDataSlice',
@@ -45,6 +46,9 @@ export const counterSlice = createSlice({
     setIsTransactionIsInvalid: (state, action) => {
       state.isTransactionIsInvalid = action.payload;
     },
+    setDataSlicePaginate: (state, action) => {
+      state.dataSlicePaginate = action.payload;
+    },
   },
 });
 export const {
@@ -58,6 +62,7 @@ export const {
   setIsRefreshPage,
   setIsVerify,
   setIsTransactionIsInvalid,
+  setDataSlicePaginate,
 } = counterSlice.actions;
 
 export default counterSlice.reducer;
