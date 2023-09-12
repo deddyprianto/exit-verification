@@ -2,34 +2,45 @@ import { useState, useEffect } from 'react';
 import { ArrowLeft, ArrotRight } from '../svg';
 import { RenderHeaderTable, RenderBodyTable } from './HeadBodyTable';
 import { useDispatch } from 'react-redux';
-import { setBagItem } from '@/feature/saveDataSlice';
+import { setBagItem, setDataSlicePaginate } from '@/feature/saveDataSlice';
 import { useWindowSize } from '@/hooks/useWindowSize';
 
 export default function Table({ data }) {
   const responsiveDesign = useWindowSize();
   const a = data?.details;
   const dispatch = useDispatch();
-  const [isArrayFiltered, setIsArrayFiltered] = useState([]);
   const [dataSlice, setDataSlice] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
 
+  const [isArrayFiltered, setIsArrayFiltered] = useState([]);
+
   useEffect(() => {
     const filteredData = a?.filter((item) => {
-      if (item?.product?.id === '458340f2-1506-41e7-9bbd-28900eba1045') {
-        setIsArrayFiltered((prevArray) => [...prevArray, item]);
+      if (item?.product?.id === '94b8995c-871b-4eb4-b124-7dc6bb08d3a2') {
+        if (
+          !isArrayFiltered.some((existingItem) => existingItem.id === item.id)
+        ) {
+          setIsArrayFiltered((prevArray) => [...prevArray, item]);
+        }
         return false;
       }
       return true;
     });
 
     setDataSlice(filteredData);
-  }, [data]);
+  }, [data, isArrayFiltered]);
 
   useEffect(() => {
     if (isArrayFiltered.length > 0) {
       dispatch(setBagItem(isArrayFiltered));
     }
   }, [isArrayFiltered]);
+
+  useEffect(() => {
+    if (dataSlice?.length !== 0) {
+      dispatch(setDataSlicePaginate(dataSlice?.length));
+    }
+  }, [dataSlice]);
 
   const itemsPerPage = responsiveDesign.height >= 1920 ? 10 : 5;
   const totalPages = Math.ceil(dataSlice?.length / itemsPerPage) || 1;
