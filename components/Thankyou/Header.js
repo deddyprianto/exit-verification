@@ -1,5 +1,5 @@
 import banner from '@/assets/img/bannerThankyou.png';
-import logo from '@/assets/img/logo.png';
+import logo from '@/assets/img/logoOrigin.png';
 import { SVGDate, SVGLocation } from '../svg';
 import { costumFormatDateNow } from '@/helper';
 import { useClockInterval } from '@/hooks/useClockInterval';
