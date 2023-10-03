@@ -23,7 +23,7 @@ export default function MainCP({ baseURL, token }) {
       <div className='h-[108px] mt-[16px] flex justify-center flex-col items-center lg:h-[144px]'>
         <div className='w-[499px] text-[24px]'>
           <div className='font-medium  text-black'>
-            input your order reference manually here
+            Input your order reference manually here
           </div>
           <div
             onClick={() => setIsOpen(true)}
