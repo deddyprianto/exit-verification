@@ -10,7 +10,7 @@ import {
 } from '@/feature/saveDataSlice';
 import { useRouter } from 'next/navigation';
 import { setRefNo } from '@/feature/saveDataPersisted';
-import middleImage from '@/assets/img/middleImage.png';
+import middleImage from '@/assets/img/middleImageSecond.png';
 
 export default function Scanner({ baseURL, token }) {
   const inputRef = useRef(null);

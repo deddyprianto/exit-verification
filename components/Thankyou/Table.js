@@ -38,7 +38,10 @@ export default function Table({ data }) {
 
   useEffect(() => {
     if (dataSlice?.length !== 0) {
-      dispatch(setDataSlicePaginate(dataSlice?.length));
+      const totalQuantity = dataSlice.reduce((accumulator, currentValue) => {
+        return accumulator + currentValue.quantity;
+      }, 0);
+      dispatch(setDataSlicePaginate(totalQuantity));
     }
   }, [dataSlice]);
 

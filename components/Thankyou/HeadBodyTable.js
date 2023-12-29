@@ -39,7 +39,7 @@ export const RenderBodyTable = ({ data }) => {
                       overflow: 'hidden',
                       padding: 0,
                       margin: 0,
-                      marginTop: isModifierExist.length === 0 && '5px',
+                      marginTop: isModifierExist?.length === 0 && '5px',
                     }}
                   >
                     {data?.product?.name}
@@ -85,7 +85,7 @@ export const RenderBodyTable = ({ data }) => {
 
       <div
         className={`flex flex-col justify-between ${
-          isModifierExist.length === 0 && 'mt-[5px]'
+          isModifierExist?.length === 0 && 'mt-[5px]'
         }`}
       >
         <div className='grid grid-cols-23'>
@@ -109,7 +109,7 @@ export const RenderBodyTable = ({ data }) => {
       </div>
 
       <div
-        className={`text-center ${isModifierExist.length === 0 && 'mt-[5px]'}`}
+        className={`text-center ${isModifierExist?.length === 0 && 'mt-[5px]'}`}
       >
         {data?.quantity}
       </div>
