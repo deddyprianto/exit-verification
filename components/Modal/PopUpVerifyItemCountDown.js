@@ -12,6 +12,9 @@ export function PopUpVerifyItemCountDown() {
   const dispatch = useDispatch();
   const verifyItem = useSelector((state) => state.dataUser.verifyItem);
   const data = useSelector((state) => state.dataUser.dataScan);
+  const dataSlicePaginate = useSelector(
+    (state) => state.dataUser.dataSlicePaginate
+  );
   const [count, setCount] = useState(10);
 
   useEffect(() => {
@@ -97,7 +100,7 @@ export function PopUpVerifyItemCountDown() {
                       }}
                     >
                       <div>Total Items</div>
-                      <div>{data?.details?.length} Items</div>
+                      <div>{dataSlicePaginate} Items</div>
                     </div>
 
                     <div
